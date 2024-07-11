@@ -1,10 +1,13 @@
 #!/usr/bin/with-contenv bash
 
+echo "Running Wireguard startup script."
+
 if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
+  echo "Public key: ${PUBLIC_KEY}, end point: ${END_POINT}"
   echo "[$(date -Iseconds)] Finding the best server..."
   api_url="https://api.nordvpn.com/v1/servers/recommendations?filters"
   technology_filter="\[servers_technologies\]\[identifier\]=wireguard_udp"
-  
+  echo "Country code: ${COUNTRY_CODE}
   # Get the country code from the country name (if provided) and add it to the API URL as a filter
   if [[ -n ${COUNTRY_CODE} ]]; then
     country_id=$(curl --silent "https://api.nordvpn.com/v1/servers/countries" | jq --raw-output ".[] | select(.code == \"${COUNTRY_CODE}\") | [.name, .id] | \"\(.[1])\"")
