@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "[$(date -Iseconds)] Starting first initd script"
+
 iptables -P OUTPUT DROP
 iptables -P INPUT DROP
 iptables -P FORWARD DROP

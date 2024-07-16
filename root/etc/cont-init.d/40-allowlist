@@ -9,3 +9,5 @@ if [[ -n ${ALLOW_LIST} ]]; then
     ip6tables -A OUTPUT -o eth0 -d "${domain}" -j ACCEPT 2>/dev/null
   done
 fi
+
+echo "[$(date -Iseconds)] 40 - Done allowlist"

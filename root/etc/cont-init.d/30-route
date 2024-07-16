@@ -13,3 +13,5 @@ if [ -n "$NET_LOCAL" ]; then
       iptables -A FORWARD -i "$iface" -s "$net" -j ACCEPT
   done
 fi
+
+echo "[$(date -Iseconds)] 30 - Done route"

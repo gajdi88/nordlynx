@@ -13,3 +13,5 @@ if [ -n "$NET6_LOCAL" ]; then
       ip6tables -A FORWARD -i "$iface" -s "$net" -j ACCEPT
   done
 fi
+
+echo "[$(date -Iseconds)] 30 - Done route6"

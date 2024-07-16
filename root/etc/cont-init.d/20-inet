@@ -53,3 +53,5 @@ while true; do
     }
   break
 done
+
+echo "[$(date -Iseconds)] 20 - Done inet"
