@@ -7,7 +7,7 @@ if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
   echo "[$(date -Iseconds)] Finding the best server..."
   api_url="https://api.nordvpn.com/v1/servers/recommendations?filters"
   technology_filter="\[servers_technologies\]\[identifier\]=wireguard_udp"
-  echo "Country code: ${COUNTRY_CODE}
+  echo "Country code: ${COUNTRY_CODE}"
   # Get the country code from the country name (if provided) and add it to the API URL as a filter
   if [[ -n ${COUNTRY_CODE} ]]; then
     country_id=$(curl --silent "https://api.nordvpn.com/v1/servers/countries" | jq --raw-output ".[] | select(.code == \"${COUNTRY_CODE}\") | [.name, .id] | \"\(.[1])\"")
@@ -23,7 +23,8 @@ if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
   server=$(jq -r '.[0] | del(.services, .technologies)' <<< "${recommendations}")
   echo "[$(date -Iseconds)] Server: ${server}"
   if [[ -z ${server} ]]; then
-    echo "[$(date -Iseconds)] Unable to select a server ¯\_(⊙︿⊙)_/¯"
+    echo "wg custom error"
+    echo "[$(date -Iseconds)] Unable to select a server"
     sleep infinity
   fi
 #   echo "[$(date -Iseconds)] Using server: ${server}"
@@ -59,7 +60,7 @@ EOF
 
 echo "[$(date -Iseconds)] Connecting..."
 wg-quick up wg0 
-echo "[$(date -Iseconds)] Connected! \(ᵔᵕᵔ)/"
+echo "[$(date -Iseconds)] Connected! Woohoo!"
 
 if [[ -n ${RECONNECT} ]]; then
   echo "[$(date -Iseconds)] Reconnecting in ${RECONNECT} seconds"
