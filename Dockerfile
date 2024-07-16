@@ -18,7 +18,10 @@ COPY /root /
 # Convert files to Unix format
 RUN find /etc/cont-init.d/ -type f -exec dos2unix {} + && \
     find /etc/services.d/ -type f -exec dos2unix {} + && \
-    find /patch/ -type f -exec dos2unix {} +
+    find /patch/ -type f -exec dos2unix {} + && \
+    chmod +x /etc/cont-init.d/* && \
+    chmod +x /etc/services.d/wireguard/* && \
+    chmod +x /patch/*
 
 RUN apk add --no-cache -U wireguard-tools curl jq patch bash iptables iptables-legacy && \
 	patch --verbose -d / -p 0 -i /patch/wg-quick.patch && \
