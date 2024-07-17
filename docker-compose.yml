@@ -20,7 +20,7 @@ services:
         volumes:
             - /etc/mykeys:/etc/mykeys
         environment:
-            - PRIVATE_KEY_FILE=/etc/mykeys/private_key
+            - PRIVATE_KEY_FILE=/etc/mykeys/privkey.txt
             - COUNTRY_CODE=NL
             # - QUERY=filters\[servers_groups\]\[identifier\]=legacy_p2p
             - NET_LOCAL=192.168.0.0/24
