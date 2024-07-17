@@ -39,6 +39,7 @@ fi
 [[ -z "${PRIVATE_KEY}" ]] && [[ -f "${PRIVATE_KEY_FILE}" ]] && PRIVATE_KEY="$(head -n 1 "${PRIVATE_KEY_FILE}")"
 
 # echo the private key
+echo "Private key file: ${PRIVATE_KEY_FILE}"
 echo "Private key: ${PRIVATE_KEY}"
 
 ( umask 077 && { cat >/etc/wireguard/wg0.conf <<-EOF
