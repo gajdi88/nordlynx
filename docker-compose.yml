@@ -17,8 +17,10 @@ services:
             - NET_ADMIN                             # required
             - SYS_MODULE                            # maybe
             - NET_RAW
+        volumes:
+            - /etc/mykeys:/etc/mykeys
         environment:
-            - PRIVATE_KEY=xxxxx                # required
+            - PRIVATE_KEY_FILE=/etc/mykeys/private_key
             - COUNTRY_CODE=NL
             # - QUERY=filters\[servers_groups\]\[identifier\]=legacy_p2p
             - NET_LOCAL=192.168.0.0/24
