@@ -1,0 +1,48 @@
+services:
+    nordlynx:
+        #image: ghcr.io/gajdi88/nordlynx
+        # image: nvpn
+        build:
+            context: https://github.com/gajdi88/nordlynx.git
+            dockerfile: Dockerfile
+            args:
+                - --no-cache
+        #entrypoint: ["/usr/local/bin/start.sh"]
+        hostname: nordlynx
+        container_name: nordlynx
+        ports:
+            - "3000:3000" # port I want forwarded for the firefox container
+            - "3001:3001" # port I want forwarded for the firefox container
+        cap_add:
+            - NET_ADMIN                             # required
+            - SYS_MODULE                            # maybe
+            - NET_RAW
+        environment:
+            - PRIVATE_KEY=$(./privkey.txt)                # required
+            - COUNTRY_CODE=NL
+            # - QUERY=filters\[servers_groups\]\[identifier\]=legacy_p2p
+            - NET_LOCAL=192.168.0.0/24
+        sysctls:
+            - net.ipv4.conf.all.src_valid_mark=1   # maybe
+            - net.ipv4.conf.all.rp_filter=2        # maybe; set reverse path filter to loose mode
+            - net.ipv6.conf.all.disable_ipv6=1     # disable ipv6; recommended if using ipv4 only
+
+    firefox:
+        image: lscr.io/linuxserver/firefox:latest
+        # hostname: firefox                        # won't work when you do network_mode
+        container_name: firefox
+        restart: unless-stopped
+        depends_on:
+            - nordlynx
+        network_mode: service:nordlynx
+        # ports:                                   # won't work; you need to do this in the nordlynx VPN container
+        #     - "3000:3000"                        # won't work; you need to do this in the nordlynx VPN container
+        #     - "3001:3001"                        # won't work; you need to do this in the nordlynx VPN container
+        volumes:
+            - /path/to/config:/config
+        environment:
+            - PUID=1000
+            - PGID=1000
+        security_opt:
+            - seccomp:unconfined
+        shm_size: "1gb"
