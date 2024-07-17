@@ -18,7 +18,7 @@ services:
             - SYS_MODULE                            # maybe
             - NET_RAW
         environment:
-            - PRIVATE_KEY=$(./privkey.txt)                # required
+            - PRIVATE_KEY=xxxxx                # required
             - COUNTRY_CODE=NL
             # - QUERY=filters\[servers_groups\]\[identifier\]=legacy_p2p
             - NET_LOCAL=192.168.0.0/24
